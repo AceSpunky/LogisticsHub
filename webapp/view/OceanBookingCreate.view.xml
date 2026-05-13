@@ -1,0 +1,314 @@
+<mvc:View controllerName="com.lipton.logisticshub.controller.OceanBookingCreate"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:grid="sap.ui.layout.cssgrid"
+    xmlns:core="sap.ui.core">
+    <Page id="oceanBookingCreatePage" title="Create New Booking" showNavButton="true" navButtonPress=".onNavBack">
+        <content>
+            <VBox class="sapUiSmallMarginBeginEnd sapUiSmallMarginTopBottom">
+
+                <f:GridList mode="None" showSeparators="None">
+                    <f:customLayout>
+                        <grid:GridBasicLayout gridTemplateColumns="repeat(2, 1fr)" gridGap="1rem" />
+                    </f:customLayout>
+
+                    <!-- ═══════════════════════════════════════════════════ -->
+                    <!-- BOOKING CRITERIA                                    -->
+                    <!-- ═══════════════════════════════════════════════════ -->
+                    <f:GridListItem type="Inactive">
+                        <f:layoutData>
+                            <grid:GridItemLayoutData gridColumn="span 1" gridRow="span 2" />
+                        </f:layoutData>
+
+                        <VBox width="100%">
+                            <OverflowToolbar design="Transparent" height="4rem">
+                                <Title text="Booking Criteria *" class="sapUiTinyMarginBegin" titleStyle="H4" />
+                                <ToolbarSpacer />
+                                <Button id="addItemBtn" text="Add Item" icon="sap-icon://add" press=".onAddItem" />
+                                <Button id="linkOrderItemBtn" text="Link Order Item" icon="sap-icon://chain-link" press=".onLinkOrderItem" />
+                            </OverflowToolbar>
+
+                            <HBox class="sapUiMediumMargin">
+                                <VBox width="50%" class="sapUiSmallMarginBegin sapUiMediumMarginEnd">
+
+                                    <VBox class="sapUiMediumMarginBottom">
+                                        <Label class="sapUiTinyMarginBottom" text="Rates Consumer" required="true" labelFor="ratesConsumerSelect" />
+                                        <Select id="ratesConsumerSelect" width="100%">
+                                            <items>
+                                                <core:Item key="shipperDemo" text="Shipper Demo" />
+                                                <core:Item key="carrierGroupA" text="Carrier Group A" />
+                                                <core:Item key="tradePartnerB" text="Trade Partner B" />
+                                            </items>
+                                        </Select>
+                                    </VBox>
+
+                                    <VBox class="sapUiMediumMarginBottom">
+                                        <Label class="sapUiTinyMarginBottom" text="Departure Window" required="true" labelFor="departureWindowPicker" />
+                                        <DateRangeSelection id="departureWindowPicker" displayFormat="dd.MM.yyyy" valueFormat="yyyy-MM-dd" width="100%" placeholder="Select departure window" />
+                                    </VBox>
+
+                                    <VBox class="sapUiMediumMarginBottom">
+                                        <Label class="sapUiTinyMarginBottom" text="Place of Receipt" required="true" labelFor="placeOfReceiptCombo" />
+                                        <ComboBox id="placeOfReceiptCombo" width="100%" placeholder="Select place of receipt">
+                                            <items>
+                                                <core:Item key="brssz_door" text="Santos, Brazil, (BRSSZ), DOOR" />
+                                                <core:Item key="brrio_door" text="Rio de Janeiro, Brazil, (BRRIO), DOOR" />
+                                                <core:Item key="arbue_door" text="Buenos Aires, Argentina, (ARBUE), DOOR" />
+                                                <core:Item key="coctg_door" text="Cartagena, Colombia, (COCTG), DOOR" />
+                                            </items>
+                                        </ComboBox>
+                                    </VBox>
+
+                                    <VBox class="sapUiMediumMarginBottom">
+                                        <Label class="sapUiTinyMarginBottom" text="Final Destination" required="true" labelFor="finalDestinationCombo" />
+                                        <ComboBox id="finalDestinationCombo" width="100%" placeholder="Select final destination">
+                                            <items>
+                                                <core:Item key="nlrtm_port" text="Rotterdam, Netherlands, (NLRTM), PORT" />
+                                                <core:Item key="deham_port" text="Hamburg, Germany, (DEHAM), PORT" />
+                                                <core:Item key="gbfxt_port" text="Felixstowe, UK, (GBFXT), PORT" />
+                                                <core:Item key="beanr_port" text="Antwerp, Belgium, (BEANR), PORT" />
+                                            </items>
+                                        </ComboBox>
+                                    </VBox>
+
+                                    <VBox class="sapUiMediumMarginBottom">
+                                        <Label class="sapUiTinyMarginBottom" text="Commodity" required="true" labelFor="commodityCombo" />
+                                        <ComboBox id="commodityCombo" width="100%" placeholder="Select commodity">
+                                            <items>
+                                                <core:Item key="greenCoffee" text="Green Coffee" />
+                                                <core:Item key="cocoaBeans" text="Cocoa Beans" />
+                                                <core:Item key="rawSugar" text="Raw Sugar" />
+                                                <core:Item key="soybeans" text="Soybeans" />
+                                                <core:Item key="cornMaize" text="Corn / Maize" />
+                                            </items>
+                                        </ComboBox>
+                                    </VBox>
+
+                                    <VBox>
+                                        <Label class="sapUiTinyMarginBottom" text="Movement Type" labelFor="movTypeFCLFCL" />
+                                        <HBox width="100%" justifyContent="SpaceBetween">
+                                            <RadioButton id="movTypeFCLFCL" text="FCL/FCL" groupName="movementType" selected="true" />
+                                            <RadioButton id="movTypeLCLFCL" text="LCL/FCL" groupName="movementType" />
+                                            <RadioButton id="movTypeLCLLCL" text="LCL/LCL" groupName="movementType" />
+                                        </HBox>
+                                    </VBox>
+
+                                </VBox>
+
+                                <VBox width="50%" class="sapUiSmallMarginBegin sapUiSmallMarginEnd">
+                                    <VBox class="sapUiMediumMarginBottom">
+                                        <Label class="sapUiTinyMarginBottom" text="HS Code" required="true" labelFor="hsCodeInput" />
+                                        <Input id="hsCodeInput" width="100%" placeholder="e.g. 0901.11" maxLength="10" />
+                                    </VBox>
+
+                                    <VBox class="sapUiMediumMarginBottom">
+                                        <Label class="sapUiTinyMarginBottom" text="Port of Loading" labelFor="portOfLoadingCombo" />
+                                        <ComboBox id="portOfLoadingCombo" width="100%" placeholder="Select port of loading">
+                                            <items>
+                                                <core:Item key="brssz" text="Santos (BRSSZ)" />
+                                                <core:Item key="brrio" text="Rio de Janeiro (BRRIO)" />
+                                                <core:Item key="arbue" text="Buenos Aires (ARBUE)" />
+                                                <core:Item key="coctg" text="Cartagena (COCTG)" />
+                                            </items>
+                                        </ComboBox>
+                                    </VBox>
+
+                                    <VBox class="sapUiMediumMarginBottom">
+                                        <Label class="sapUiTinyMarginBottom" text="Port of Discharge" required="true" labelFor="portOfDischargeCombo" />
+                                        <ComboBox id="portOfDischargeCombo" width="100%" placeholder="Select port of discharge">
+                                            <items>
+                                                <core:Item key="nlrtm" text="Rotterdam (NLRTM)"/>
+                                                <core:Item key="deham" text="Hamburg (DEHAM)" />
+                                                <core:Item key="gbfxt" text="Felixstowe (GBFXT)" />
+                                                <core:Item key="beanr" text="Antwerp (BEANR)" />
+                                            </items>
+                                        </ComboBox>
+                                    </VBox>
+
+                                    <VBox>
+                                        <Label class="sapUiTinyMarginBottom" text="Article Description" required="true" labelFor="articleDescInput" />
+                                        <TextArea id="articleDescInput" width="100%" rows="9" placeholder="e.g. Green Coffee beans, unroasted" />
+                                    </VBox>
+                                    
+                                </VBox>
+                            </HBox>
+                        </VBox>
+                    </f:GridListItem>
+
+                    <!-- ═══════════════════════════════════════════════════ -->
+                    <!-- CONTAINER CONFIGURATION                            -->
+                    <!-- ═══════════════════════════════════════════════════ -->
+                    <f:GridListItem type="Inactive">
+                        <f:layoutData>
+                            <grid:GridItemLayoutData gridColumn="span 1" />
+                        </f:layoutData>
+
+                        <VBox width="100%">
+                            <OverflowToolbar height="4rem">
+                                <Title text="Container Configuration" class="sapUiTinyMarginBegin" titleStyle="H4" />
+                                <ToolbarSpacer />
+                                <Button id="addContainerTypeBtn" text="Add Container Type" icon="sap-icon://add" press=".onAddContainerType" />
+                                <Button id="showCarrierHaulageBtn" text="Show Carrier Haulage Details" icon="sap-icon://detail-view" press=".onShowCarrierHaulage" />
+                            </OverflowToolbar>
+
+                            <VBox class="sapUiMediumMargin">
+
+                                <HBox class="sapUiSmallMarginBeginEnd sapUiMediumMarginBottom">
+                                    <VBox class="sapUiMediumMarginEnd">
+                                        <Label class="sapUiTinyMarginBottom" text="SOC" labelFor="socCheckbox" />
+                                        <CheckBox id="socCheckbox" selected="false" />
+                                    </VBox>
+                                    <VBox class="sapUiMediumMarginEnd">
+                                        <layoutData>
+                                            <FlexItemData growFactor="1" />
+                                        </layoutData>
+                                        <Label class="sapUiTinyMarginBottom" text="Containers" required="true" labelFor="containersInput" />
+                                        <StepInput id="containersInput" min="1" max="99" value="1" step="1" width="100%" />
+                                    </VBox>
+                                    <VBox >
+                                        <layoutData>
+                                            <FlexItemData growFactor="2" />
+                                        </layoutData>
+                                        <Label class="sapUiTinyMarginBottom" text="Weight (kg)" required="true" labelFor="weightInput" />
+                                        <Input id="weightInput" type="Number" width="100%" placeholder="e.g. 43200" />
+                                    </VBox>
+
+                                </HBox>
+
+                                <VBox class="sapUiSmallMarginBeginEnd sapUiSmallMarginBottom">
+                                    <Label class="sapUiTinyMarginBottom" text="Container Type" required="true" labelFor="containerTypeCombo" />
+                                    <ComboBox id="containerTypeCombo" width="100%" placeholder="Select container type">
+                                        <items>
+                                            <core:Item key="20dry86" text="20' Dry 8'6" />
+                                            <core:Item key="40dry86" text="40' Dry 8'6" />
+                                            <core:Item key="40hc" text="40' HC" />
+                                            <core:Item key="45hc" text="45' HC" />
+                                            <core:Item key="20reefer" text="20' Reefer" />
+                                            <core:Item key="40reefer" text="40' Reefer HC" />
+                                        </items>
+                                    </ComboBox>
+                                </VBox>
+
+                            </VBox>
+                        </VBox>
+                    </f:GridListItem>
+
+                    <!-- ═══════════════════════════════════════════════════ -->
+                    <!-- FLOW & CARRIER SELECTION                           -->
+                    <!-- ═══════════════════════════════════════════════════ -->
+                    <f:GridListItem type="Inactive">
+                        <f:layoutData>
+                            <grid:GridItemLayoutData gridColumn="span 1" />
+                        </f:layoutData>
+                        <VBox width="100%">
+                            <OverflowToolbar height="4rem">
+                                <Title text="Flow &amp; Carrier Selection" class="sapUiTinyMarginBegin" titleStyle="H4" />
+                            </OverflowToolbar>
+
+                            <VBox class="sapUiMediumMargin">
+
+                                <VBox class="sapUiSmallMarginBegin sapUiMediumMarginBottom">
+                                    <Label class="sapUiTinyMarginBottom" text="Flow" labelFor="flowRadioGroup" />
+                                    <RadioButtonGroup id="flowRadioGroup" selectedIndex="0" columns="3" select=".onFlowSelect">
+                                        <buttons>
+                                            <RadioButton id="flowBook" text="Book" class="sapUiSmallMarginEnd"/>
+                                            <RadioButton id="flowDelegate" text="Delegate" class="sapUiSmallMarginEnd"/>
+                                            <RadioButton id="flowOutsideCargoo" text="Book outside Cargoo" />
+                                        </buttons>
+                                    </RadioButtonGroup>
+                                </VBox>
+
+                                <VBox class="sapUiSmallMarginBeginEnd sapUiSmallMarginBottom">
+                                    <Label class="sapUiTinyMarginBottom" text="Delegate To" required="true" labelFor="delegateToCombo" />
+                                    <ComboBox id="delegateToCombo" width="100%" placeholder="Delegate To" enabled="{bookingCreate>/delegateEnabled}">
+                                        <items>
+                                            <core:Item key="agent1" text="Freight Agent Alpha" />
+                                            <core:Item key="agent2" text="Freight Agent Beta" />
+                                            <core:Item key="agent3" text="Logistics Partner C" />
+                                        </items>
+                                    </ComboBox>
+                                </VBox>
+
+                                <VBox class="sapUiSmallMarginBeginEnd sapUiSmallMarginBottom">
+                                    <Label class="sapUiTinyMarginBottom" text="Emails" required="true" labelFor="emailsInput" />
+                                    <MultiInput id="emailsInput" width="100%" placeholder="Add email addresses" tokenUpdate=".onEmailTokenUpdate" />
+                                </VBox>
+
+                            </VBox>
+                        </VBox>
+                    </f:GridListItem>
+
+                </f:GridList>
+
+                <!-- ═══════════════════════════════════════════════════ -->
+                <!-- DOCUMENTS                                           -->
+                <!-- ═══════════════════════════════════════════════════ -->
+                <f:GridList mode="None" showSeparators="None" class="sapUiSmallMarginTop">
+                    <f:customLayout>
+                        <grid:GridBasicLayout gridTemplateColumns="repeat(1, 1fr)" />
+                    </f:customLayout>
+
+                    <f:GridListItem type="Inactive">
+                        <VBox width="98%">
+                            <OverflowToolbar design="Transparent" height="4rem">
+                                <Title text="Documents ({= ${bookingCreate>/documents}.length})" class="sapUiTinyMarginBegin" titleStyle="H4" />
+                            </OverflowToolbar>
+
+                            <Table
+                                id="bookingDocumentsTable"
+                                class="sapUiSmallMarginBeginEnd sapUiSmallMarginBottom"
+                                items="{bookingCreate>/documents}"
+                                noDataText="No documents available for this booking."
+                                alternateRowColors="true">
+                                <columns>
+                                    <Column width="2.5rem" />
+                                    <Column hAlign="Begin">
+                                        <Text text="Document Name" />
+                                    </Column>
+                                    <Column hAlign="Begin" width="14rem">
+                                        <Text text="Type" />
+                                    </Column>
+                                    <Column hAlign="Begin" width="10rem">
+                                        <Text text="Date Uploaded" />
+                                    </Column>
+                                    <Column hAlign="Begin" width="7rem">
+                                        <Text text="File Size" />
+                                    </Column>
+                                    <Column hAlign="Begin" width="8rem">
+                                        <Text text="Status" />
+                                    </Column>
+                                    <Column hAlign="Center" width="6rem">
+                                        <Text text="Download" />
+                                    </Column>
+                                </columns>
+                                <items>
+                                    <ColumnListItem type="Inactive">
+                                        <cells>
+                                            <core:Icon src="{bookingCreate>icon}" size="1.2rem" color="#1473E6" />
+                                            <ObjectIdentifier title="{bookingCreate>name}" text="{bookingCreate>description}" />
+                                            <Text text="{bookingCreate>type}" />
+                                            <Text text="{bookingCreate>dateUploaded}" />
+                                            <Text text="{bookingCreate>fileSize}" />
+                                            <ObjectStatus text="{bookingCreate>status}" state="{bookingCreate>statusState}" />
+                                            <Button icon="sap-icon://download" type="Transparent" tooltip="Download" press=".onDownloadDocument" />
+                                        </cells>
+                                    </ColumnListItem>
+                                </items>
+                            </Table>
+                        </VBox>
+                    </f:GridListItem>
+                </f:GridList>
+
+            </VBox>
+        </content>
+
+        <footer>
+            <OverflowToolbar>
+                <ToolbarSpacer />
+                <Button id="cancelBookingBtn" text="Cancel" press=".onCancel" />
+                <Button id="submitBookingBtn" text="Submit Booking" type="Emphasized" press=".onSubmitBooking" />
+            </OverflowToolbar>
+        </footer>
+    </Page>
+</mvc:View>

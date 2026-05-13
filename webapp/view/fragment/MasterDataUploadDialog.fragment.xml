@@ -1,0 +1,35 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:u="sap.ui.unified">
+    <Dialog id="masterDataUploadDialog" title="Master Data Upload" contentWidth="500px" draggable="true">
+        <content>
+            <VBox alignItems="Center">
+                <!-- Top: Illustrated Message -->
+                <VBox alignItems="Center" justifyContent="Center">
+                    <IllustratedMessage illustrationType="sapIllus-UploadToCloud" illustrationSize="Medium" title="Upload Your Master Data Here" description="Keep your logistics operations accurate and in sync." />
+                </VBox>
+
+
+                <!-- Left: Form Controls -->
+                <VBox width="90%" class="sapUiLargeMarginBottom">
+                    <Label class="sapUiTinyMarginBottom" text="Data Type" required="true" labelFor="masterDataTypeSelect" />
+                    <Select id="masterDataTypeSelect" width="100%" forceSelection="true" class="sapUiSmallMarginBottom">
+                        <items>
+                            <core:Item key="laneMapping" text="Lane Mapping" />
+                            <core:Item key="carrierMapping" text="Carrier Mapping" />
+                        </items>
+                    </Select>
+                    <Label class="sapUiTinyMarginBottom sapUiSmallMarginTop" text="Select File" required="true" labelFor="masterDataFileUploader" />
+                    <u:FileUploader id="masterDataFileUploader" width="100%" placeholder="Choose a file (.xlsx, .csv)..." fileType="xlsx,csv" style="Default" />
+                </VBox>
+                
+            </VBox>
+        </content>
+        <beginButton>
+            <Button text="Submit" type="Emphasized" icon="sap-icon://upload" press=".onMasterDataUploadSubmit" />
+        </beginButton>
+        <endButton>
+            <Button text="Cancel" press=".onMasterDataUploadClose" />
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>

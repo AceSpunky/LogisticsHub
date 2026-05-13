@@ -1,0 +1,83 @@
+<mvc:View controllerName="com.lipton.logisticshub.controller.OceanBookingList"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+    <Page id="oceanBookingListPage" title="Ocean Booking" showNavButton="false">
+        <content>
+            <Table
+                id="bookingsTable"
+                width="100%"
+                items="{oceanBookings>/bookings}"
+                growing="true"
+                growingThreshold="20"
+                alternateRowColors="true"
+                noDataText="No bookings found">
+                <headerToolbar>
+                    <OverflowToolbar height="3rem">
+                        <Title text="Bookings ({oceanBookings>/count})" titleStyle="H4" />
+                        <ToolbarSpacer />
+                        <Button
+                            id="createBookingBtn"
+                            class="sapUiTinyMarginEnd"
+                            text="Create New Booking"
+                            type="Emphasized"
+                            icon="sap-icon://add"
+                            press=".onCreateBooking" />
+                    </OverflowToolbar>
+                </headerToolbar>
+                <columns>
+                    <Column hAlign="Begin" width="11rem">
+                        <Text text="Booking Ref" />
+                    </Column>
+                    <Column hAlign="Begin" width="14rem">
+                        <Text text="Departure Window" />
+                    </Column>
+                    <Column hAlign="Begin">
+                        <Text text="Origin" />
+                    </Column>
+                    <Column hAlign="Begin">
+                        <Text text="Destination" />
+                    </Column>
+                    <Column hAlign="Begin" width="10rem">
+                        <Text text="Commodity" />
+                    </Column>
+                    <Column hAlign="Begin" width="9rem">
+                        <Text text="Movement Type" />
+                    </Column>
+                    <Column hAlign="Begin" width="12rem">
+                        <Text text="Containers" />
+                    </Column>
+                    <Column hAlign="Begin" width="8rem">
+                        <Text text="Status" />
+                    </Column>
+                </columns>
+                <items>
+                    <ColumnListItem type="Navigation" press=".onBookingPress">
+                        <cells>
+                            <ObjectIdentifier
+                                title="{oceanBookings>bookingRef}"
+                                text="{oceanBookings>ratesConsumer}" />
+                            <Text text="{oceanBookings>departureWindow}" />
+                            <VBox>
+                                <Text text="{oceanBookings>placeOfReceipt}" wrapping="false" />
+                                <ObjectStatus text="{oceanBookings>portOfLoading}" />
+                            </VBox>
+                            <VBox>
+                                <Text text="{oceanBookings>finalDestination}" wrapping="false" />
+                                <ObjectStatus text="{oceanBookings>portOfDischarge}" />
+                            </VBox>
+                            <Text text="{oceanBookings>commodity}" />
+                            <Text text="{oceanBookings>movementType}" />
+                            <VBox>
+                                <Text text="{oceanBookings>containerCount} x {oceanBookings>containerType}" />
+                                <Text text="{oceanBookings>weight} kg" />
+                            </VBox>
+                            <ObjectStatus
+                                text="{oceanBookings>status}"
+                                state="{oceanBookings>statusState}" />
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </content>
+    </Page>
+</mvc:View>

@@ -1,0 +1,6 @@
+<mvc:View controllerName="com.lipton.logisticshub.controller.SOSTOTracker"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+    <Page id="soStoTrackerPage" title="SO/STO Tracker" showNavButton="false">
+    </Page>
+</mvc:View>

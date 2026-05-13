@@ -1,0 +1,95 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.f"
+    xmlns:grid="sap.ui.layout.cssgrid">
+
+    <OverflowToolbar id="consolidationToolbar" class="lhFullWidthTab" design="Transparent"  height="3rem">
+        <ObjectStatus id="consolidationHint" class="sapUiSmallMarginBegin" text="AI-assisted consolidation based on SAP TM lane + selection profile configuration. Click 'Create FO' to generate the Freight Order in SAP TM." />
+        <ToolbarSpacer id="suggestionSpac" class="sapUiSmallMarginBeginEnd" />
+        <Button id="btnCreateFO" class="sapUiSmallMarginEnd" text="Create FO" type="Emphasized" icon="sap-icon://add" press=".onCreateFO">
+            <customData>
+                <core:CustomData key="suggestionId" value="{fufo>id}" />
+            </customData>
+        </Button>
+    </OverflowToolbar>
+    <VBox id="consolidationRoot" class="sapUiSmallMarginTop">
+        <VBox id="suggestionList" items="{fufo>/consolidationSuggestions}">
+            <f:GridList id="suggestionPanelGrid" class="sapUiSmallMarginBeginEnd sapUiSmallMarginBottom" width="98%">
+                <f:GridListItem id="suggestionPanelItem" type="Inactive">
+                    <f:layoutData>
+                        <grid:ResponsiveColumnItemLayoutData id="suggestionPanelLayoutData" columns="auto" />
+                    </f:layoutData>
+                    <Panel id="suggestionPanel" expandable="true" expanded="true">
+                        <headerToolbar>
+                            <OverflowToolbar id="suggestionPanelToolbar" height="4rem">
+                                <Title id="suggestionPanelTitle" text="{fufo>headerTitle}" titleStyle="H4" />
+                                <Label id="suggestionPanelLane" text="{fufo>lane} · {fufo>selectionProfile}" class="sapUiTinyMarginBegin" />
+                                <ToolbarSpacer id="suggestionPanelSpacer" />
+                                <GenericTag id="suggestionCapacity" class="sapUiTinyMarginEnd" text="Capacity" status="Success">
+                                    <ObjectNumber id="suggestionCapacityNum" number="{fufo>capacityUtilPct}" unit="%" state="Success" emphasized="false" />
+                                </GenericTag>
+                                <GenericTag id="suggestionSaving" class="sapUiTinyMarginEnd" text="Saving" status="Success">
+                                    <ObjectNumber id="suggestionSavingNum" number="{fufo>savingVsSingle}" state="Success" emphasized="false" />
+                                </GenericTag>
+                                <GenericTag id="suggestionConfidence" class="sapUiSmallMarginEnd" text="Confidence" status="None">
+                                    <ObjectNumber id="suggestionConfidenceNum" number="{fufo>confidencePct}" unit="%" emphasized="false" />
+                                </GenericTag>
+                            </OverflowToolbar>
+                        </headerToolbar>
+                        <content>
+                            <HBox id="suggestionDetails" wrap="Wrap" class="sapUiSmallMargin">
+                                <VBox id="detailVehicle" class="sapUiSmallMarginEnd" width="170px">
+                                    <Label id="lblVehicle" text="Vehicle Type" />
+                                    <Text id="valVehicle" text="{fufo>vehicleType}" class="sapUiTinyMarginTop" />
+                                </VBox>
+                                <VBox id="detailCarrier" class="sapUiSmallMarginEnd" width="170px">
+                                    <Label id="lblCarrier" text="Suggested Carrier" />
+                                    <Text id="valCarrier" text="{fufo>suggestedCarrier}" class="sapUiTinyMarginTop" />
+                                </VBox>
+                                <VBox id="detailCost" class="sapUiSmallMarginEnd" width="170px">
+                                    <Label id="lblCost" text="Est. Cost" />
+                                    <ObjectStatus id="valCost" text="{fufo>estimatedCostEur}" state="Success" class="sapMObjectStatusLarge" />
+                                </VBox>
+                                <VBox id="detailWeight" width="170px">
+                                    <Label id="lblWeight" text="Total Weight / Vol" />
+                                    <Text id="valWeight" text="{fufo>totalWeightVol}" class="sapUiTinyMarginTop" />
+                                </VBox>
+                            </HBox>
+                            <Title id="fuTableTitle" text="Freight Units to combine ({fufo>fuCount}) :" level="H6" class="sapUiSmallMarginBeginEnd sapUiTinyMarginBottom sapUiSmallMarginTop" />
+                            <Table id="fuTable" items="{fufo>freightUnits}" showSeparators="All" fixedLayout="false" class="sapUiSmallMarginBottom">
+                                <columns>
+                                    <Column id="colFuId">
+                                        <Text id="colFuIdLbl" text="FU #" />
+                                    </Column>
+                                    <Column id="colFuCustomer">
+                                        <Text id="colFuCustomerLbl" text="Customer / Order" />
+                                    </Column>
+                                    <Column id="colFuWeight">
+                                        <Text id="colFuWeightLbl" text="Weight" />
+                                    </Column>
+                                    <Column id="colFuPallets">
+                                        <Text id="colFuPalletsLbl" text="Pallets" />
+                                    </Column>
+                                    <Column id="colFuSvcLvl">
+                                        <Text id="colFuSvcLvlLbl" text="Service Level" />
+                                    </Column>
+                                </columns>
+                                <items>
+                                    <ColumnListItem id="fuRow">
+                                        <cells>
+                                            <ObjectIdentifier id="cellFuId" title="{fufo>id}" />
+                                            <Text id="cellFuCustomer" text="{fufo>customer}" />
+                                            <Text id="cellFuWeight" text="{fufo>weightT}t" />
+                                            <Text id="cellFuPallets" text="{fufo>pallets} pal" />
+                                            <ObjectStatus id="cellFuSvcLvl" text="{fufo>serviceLevel}" state="{fufo>serviceLevelState}" />
+                                        </cells>
+                                    </ColumnListItem>
+                                </items>
+                            </Table>
+                        </content>
+                    </Panel>
+                </f:GridListItem>
+            </f:GridList>
+        </VBox>
+    </VBox>
+</core:FragmentDefinition>

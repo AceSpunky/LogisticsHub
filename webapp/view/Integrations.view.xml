@@ -1,0 +1,272 @@
+<mvc:View controllerName="com.lipton.logisticshub.controller.Integrations"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:grid="sap.ui.layout.cssgrid">
+    <Page id="integrationsPage" title="Integrations" showNavButton="false">
+        <content>
+            <VBox id="integrationsLayout" class="sapUiSmallMarginTop">
+
+                <!-- ① Integration System Tiles -->
+                <f:GridList id="integrationTilesGrid" showSeparators="None" class="sapUiSmallMarginBeginEnd sapUiSmallMarginBottom" width="98%">
+                    <f:layoutData>
+                        <grid:ResponsiveColumnItemLayoutData columns="auto" />
+                    </f:layoutData>
+
+                    <!-- SAP S/4HANA -->
+                    <f:GridListItem id="tileSap" type="Inactive">
+                        <VBox id="tileSapContent" class="sapUiSmallMargin">
+                            <HBox id="tileSapHeaderRow" justifyContent="SpaceBetween" alignItems="Center" class="sapUiTinyMarginBottom">
+                                <Title id="tileSapTitle" text="SAP S/4HANA" level="H5" />
+                                <ObjectStatus id="tileSapBadge" text="Active" state="Success" inverted="true" />
+                            </HBox>
+                            <Text id="tileSapSubtitle" text="TM Module · OData APIs" class="sapUiTinyMarginBottom" />
+                            <VBox id="tileSapMeta" class="sapUiTinyMarginTop">
+                                <HBox id="tileSapRow1" justifyContent="SpaceBetween" class="sapUiTinyMarginBottom">
+                                    <Label id="tileSapLbl1" text="Last full sync" />
+                                    <Text id="tileSapVal1" text="2 min ago" />
+                                </HBox>
+                                <HBox id="tileSapRow2" justifyContent="SpaceBetween" class="sapUiTinyMarginBottom">
+                                    <Label id="tileSapLbl2" text="FU pull interval" />
+                                    <Text id="tileSapVal2" text="5 min" />
+                                </HBox>
+                                <HBox id="tileSapRow3" justifyContent="SpaceBetween" class="sapUiTinyMarginBottom">
+                                    <Label id="tileSapLbl3" text="FO write-back" />
+                                    <Text id="tileSapVal3" text="Enabled" />
+                                </HBox>
+                                <HBox id="tileSapRow4" justifyContent="SpaceBetween">
+                                    <Label id="tileSapLbl4" text="Active FUs" />
+                                    <Text id="tileSapVal4" text="22" />
+                                </HBox>
+                            </VBox>
+                            <HBox id="tileSapActions" class="sapUiSmallMarginTop">
+                                <Button id="btnSapSync" text="Sync Now" type="Transparent" press=".onSapSync" />
+                                <Button id="btnSapConfig" text="Configure" type="Transparent" press=".onSapConfigure" />
+                            </HBox>
+                        </VBox>
+                    </f:GridListItem>
+
+                    <!-- Cargoo -->
+                    <f:GridListItem id="tileCargoo" type="Inactive">
+                        <VBox id="tileCargooContent" class="sapUiSmallMargin">
+                            <HBox id="tileCargooHeaderRow" justifyContent="SpaceBetween" alignItems="Center" class="sapUiTinyMarginBottom">
+                                <Title id="tileCargooTitle" text="Cargoo" level="H5" />
+                                <ObjectStatus id="tileCaargooBadge" text="Active" state="Success" inverted="true" />
+                            </HBox>
+                            <Text id="tileCargooSubtitle" text="Ocean Freight · Document Portal" class="sapUiTinyMarginBottom" />
+                            <VBox id="tileCargooMeta" class="sapUiTinyMarginTop">
+                                <HBox id="tileCargooRow1" justifyContent="SpaceBetween" class="sapUiTinyMarginBottom">
+                                    <Label id="tileCargooLbl1" text="Ocean bookings" />
+                                    <Text id="tileCargooVal1" text="5" />
+                                </HBox>
+                                <HBox id="tileCargooRow2" justifyContent="SpaceBetween" class="sapUiTinyMarginBottom">
+                                    <Label id="tileCargooLbl2" text="Shipped" />
+                                    <Text id="tileCargooVal2" text="3" />
+                                </HBox>
+                                <HBox id="tileCargooRow3" justifyContent="SpaceBetween" class="sapUiTinyMarginBottom">
+                                    <Label id="tileCargooLbl3" text="Docs received" />
+                                    <Text id="tileCargooVal3" text="3 B/L, 1 SWB" />
+                                </HBox>
+                                <HBox id="tileCargooRow4" justifyContent="SpaceBetween">
+                                    <Label id="tileCargooLbl4" text="Pending B/L" />
+                                    <Text id="tileCargooVal4" text="2" />
+                                </HBox>
+                            </VBox>
+                            <HBox id="tileCargooActions" class="sapUiSmallMarginTop">
+                                <Button id="btnCargooPortal" text="Open Portal" type="Transparent" press=".onCargooPortal" />
+                                <Button id="btnCargooConfig" text="Configure" type="Transparent" press=".onCargooConfigure" />
+                            </HBox>
+                        </VBox>
+                    </f:GridListItem>
+
+                    <!-- Shippeo -->
+                    <f:GridListItem id="tileShippeo" type="Inactive">
+                        <VBox id="tileShippeoContent" class="sapUiSmallMargin">
+                            <HBox id="tileShippeoHeaderRow" justifyContent="SpaceBetween" alignItems="Center" class="sapUiTinyMarginBottom">
+                                <Title id="tileShippeoTitle" text="Shippeo" level="H5" />
+                                <ObjectStatus id="tileShippeoBadge" text="Degraded" state="Warning" inverted="true" />
+                            </HBox>
+                            <Text id="tileShippeoSubtitle" text="Road Carrier Network · 17 Carriers" class="sapUiTinyMarginBottom" />
+                            <VBox id="tileShippeoMeta" class="sapUiTinyMarginTop">
+                                <HBox id="tileShippeoRow1" justifyContent="SpaceBetween" class="sapUiTinyMarginBottom">
+                                    <Label id="tileShippeoLbl1" text="Total carriers" />
+                                    <Text id="tileShippeoVal1" text="17" />
+                                </HBox>
+                                <HBox id="tileShippeoRow2" justifyContent="SpaceBetween" class="sapUiTinyMarginBottom">
+                                    <Label id="tileShippeoLbl2" text="Active" />
+                                    <Text id="tileShippeoVal2" text="15" />
+                                </HBox>
+                                <HBox id="tileShippeoRow3" justifyContent="SpaceBetween" class="sapUiTinyMarginBottom">
+                                    <Label id="tileShippeoLbl3" text="Degraded" />
+                                    <Text id="tileShippeoVal3" text="1" />
+                                </HBox>
+                                <HBox id="tileShippeoRow4" justifyContent="SpaceBetween">
+                                    <Label id="tileShippeoLbl4" text="Offline" />
+                                    <Text id="tileShippeoVal4" text="1 (XPO Logistics)" />
+                                </HBox>
+                            </VBox>
+                            <HBox id="tileShippeoActions" class="sapUiSmallMarginTop">
+                                <Button id="btnShippeoPortal" text="Open Shippeo" type="Transparent" press=".onShippeoPortal" />
+                                <Button id="btnShippeoConfig" text="Configure" type="Transparent" press=".onShippeoConfigure" />
+                            </HBox>
+                        </VBox>
+                    </f:GridListItem>
+
+                </f:GridList>
+
+                <!-- ② Shippeo — Carrier Connection Status (expandable) -->
+                <f:GridList id="shippeoPanelGrid" class="sapUiSmallMarginBeginEnd sapUiSmallMarginBottom" width="98%">
+                    <f:GridListItem id="shippeoPanelItem" type="Inactive">
+                        <f:layoutData>
+                            <grid:ResponsiveColumnItemLayoutData id="shippeoPanelLayoutData" columns="auto" />
+                        </f:layoutData>
+                        <Panel id="shippeoPanel" expandable="true" expanded="false">
+                            <headerToolbar>
+                                <OverflowToolbar id="shippeoPanelToolbar" height="4rem">
+                                    <Title id="shippeoPanelTitle" text="Shippeo — Carrier Connection Status" titleStyle="H4" />
+                                    <ObjectStatus id="shippeoPanelSubtitle" text="17 integrated land transport carriers" class="sapUiSmallMarginBegin" />
+                                    <ToolbarSpacer id="shippeoPanelSpacer" />
+                                    <SearchField id="carrierSearchField"  class="sapUiTinyMarginEnd"  placeholder="Search carriers…" width="15rem" liveChange=".onCarrierSearch" />
+                                </OverflowToolbar>
+                            </headerToolbar>
+                            <Table id="carrierTable" items="{integrations>/carrierIntegrations}" fixedLayout="false" showSeparators="All" noDataText="No carriers match your search.">
+                                <columns>
+                                    <Column id="colCarrier">
+                                        <Text id="colCarrierLbl" text="Carrier" />
+                                    </Column>
+                                    <Column id="colScac" width="5rem" minScreenWidth="Tablet" demandPopin="true">
+                                        <Text id="colScacLbl" text="SCAC" />
+                                    </Column>
+                                    <Column id="colCarrierStatus" width="7rem">
+                                        <Text id="colCarrierStatusLbl" text="Status" />
+                                    </Column>
+                                    <Column id="colLastSync" width="12rem" minScreenWidth="Desktop" demandPopin="true">
+                                        <Text id="colLastSyncLbl" text="Last Sync" />
+                                    </Column>
+                                    <Column id="colActiveShipments" width="9rem" minScreenWidth="Tablet" demandPopin="true" hAlign="End">
+                                        <Text id="colActiveShipmentsLbl" text="Active Shipments" />
+                                    </Column>
+                                    <Column id="colCarrierActions" width="5rem" hAlign="End">
+                                        <Text id="colCarrierActionsLbl" text="Actions" />
+                                    </Column>
+                                </columns>
+                                <items>
+                                    <ColumnListItem id="carrierRow">
+                                        <cells>
+                                            <ObjectIdentifier id="cellCarrierName" title="{integrations>carrier}" />
+                                            <Text id="cellScac" text="{integrations>scac}" />
+                                            <ObjectStatus id="cellCarrierStatus" text="{integrations>statusLabel}" state="{integrations>statusState}" inverted="true" />
+                                            <Text id="cellLastSync" text="{integrations>lastSync}" />
+                                            <ObjectNumber id="cellActiveShipments" number="{integrations>activeShipments}" state="{integrations>statusState}" unit="" />
+                                            <Button id="btnViewShipments" icon="sap-icon://journey-arrive" type="Transparent" tooltip="View Shipments" press=".onViewCarrierShipments">
+                                                <customData>
+                                                    <core:CustomData key="scac" value="{integrations>scac}" />
+                                                </customData>
+                                            </Button>
+                                        </cells>
+                                    </ColumnListItem>
+                                </items>
+                            </Table>
+                        </Panel>
+                    </f:GridListItem>
+                </f:GridList>
+
+                <!-- ③ Cargoo — Ocean Freight Bookings (expandable) -->
+                <f:GridList id="cargooPanelGrid" class="sapUiSmallMarginBeginEnd sapUiSmallMarginBottom" width="98%">
+                    <f:GridListItem id="cargooPanelItem" type="Inactive">
+                        <f:layoutData>
+                            <grid:ResponsiveColumnItemLayoutData id="cargooPanelLayoutData" columns="auto" />
+                        </f:layoutData>
+                        <Panel id="cargooPanel" expandable="true" expanded="true">
+                            <headerToolbar>
+                                <OverflowToolbar id="cargooPanelToolbar" height="4rem">
+                                    <Title id="cargooPanelTitle" text="Cargoo — Ocean Freight Bookings" titleStyle="H4" />
+                                    <ObjectStatus id="cargooPanelSubtitle" text="5 active bookings · B/L and shipping docs" class="sapUiSmallMarginBegin" />
+                                    <ToolbarSpacer id="cargooPanelSpacer" />
+                                </OverflowToolbar>
+                            </headerToolbar>
+                            <Table id="oceanTable" items="{integrations>/oceanShipments}" fixedLayout="true" showSeparators="All" noDataText="No ocean shipments found.">
+                                <columns>
+                                    <Column id="colCargooRef" width="8rem">
+                                        <Text id="colCargooRefLbl" text="Cargoo Ref" />
+                                    </Column>
+                                    <Column id="colVesselLine">
+                                        <Text id="colVesselLineLbl" text="Vessel / Line" />
+                                    </Column>
+                                    <Column id="colOceanRoute" width="12rem" minScreenWidth="Tablet" demandPopin="true">
+                                        <Text id="colOceanRouteLbl" text="Route" />
+                                    </Column>
+                                    <Column id="colContainer" width="9rem" minScreenWidth="Desktop" demandPopin="true">
+                                        <Text id="colContainerLbl" text="Container" />
+                                    </Column>
+                                    <Column id="colOceanStatus" width="9rem">
+                                        <Text id="colOceanStatusLbl" text="Status" />
+                                    </Column>
+                                    <Column id="colBlNumber" width="10rem" minScreenWidth="Desktop" demandPopin="true">
+                                        <Text id="colBlNumberLbl" text="B/L Number" />
+                                    </Column>
+                                    <Column id="colPosition">
+                                        <Text id="colPositionLbl" text="Position / Event" />
+                                    </Column>
+                                </columns>
+                                <items>
+                                    <ColumnListItem id="oceanRow">
+                                        <cells>
+                                            <ObjectIdentifier id="cellCargooRef" title="{integrations>ref}" />
+                                            <Text id="cellVesselLine" text="{integrations>vesselLine}" />
+                                            <Text id="cellOceanRoute" text="{integrations>route}" />
+                                            <Text id="cellContainer" text="{integrations>container}" />
+                                            <ObjectStatus id="cellOceanStatus" text="{integrations>statusLabel}" state="{integrations>statusState}" inverted="true" />
+                                            <Text id="cellBlNumber" text="{integrations>blNumber}" />
+                                            <Text id="cellPosition" text="{integrations>positionEvent}" />
+                                        </cells>
+                                    </ColumnListItem>
+                                </items>
+                            </Table>
+                        </Panel>
+                    </f:GridListItem>
+                </f:GridList>
+
+                <!-- ④ Recent Integration Events (not expandable, no column headers) -->
+                <f:GridList id="eventsPanelGrid" class="sapUiSmallMarginBeginEnd sapUiSmallMarginBottom" width="98%">
+                    <f:GridListItem id="eventsPanelItem" type="Inactive">
+                        <f:layoutData>
+                            <grid:ResponsiveColumnItemLayoutData id="eventsPanelLayoutData" columns="auto" />
+                        </f:layoutData>
+                        <Panel id="eventsPanel" expandable="false">
+                            <headerToolbar>
+                                <OverflowToolbar id="eventsPanelToolbar" height="4rem">
+                                    <Title id="eventsPanelTitle" text="Recent Integration Events" titleStyle="H4" />
+                                </OverflowToolbar>
+                            </headerToolbar>
+                            <Table id="eventsTable" items="{integrations>/integrationEvents}" fixedLayout="false" showSeparators="Inner" showNoData="false">
+                                <columns>
+                                    <Column id="colEvtTime" width="4rem">
+                                        <Text id="colEvtTimeLbl" text="" />
+                                    </Column>
+                                    <Column id="colEvtSource" width="6rem">
+                                        <Text id="colEvtSourceLbl" text="" />
+                                    </Column>
+                                    <Column id="colEvtDesc">
+                                        <Text id="colEvtDescLbl" text="" />
+                                    </Column>
+                                </columns>
+                                <items>
+                                    <ColumnListItem id="eventRow">
+                                        <cells>
+                                            <Text id="cellEvtTime" text="{integrations>time}" />
+                                            <ObjectStatus id="cellEvtSource" text="{integrations>integration}" state="{integrations>integrationState}" inverted="true" />
+                                            <Text id="cellEvtDesc" text="{integrations>description}" />
+                                        </cells>
+                                    </ColumnListItem>
+                                </items>
+                            </Table>
+                        </Panel>
+                    </f:GridListItem>
+                </f:GridList>
+
+            </VBox>
+        </content>
+    </Page>
+</mvc:View>

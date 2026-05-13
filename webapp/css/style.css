@@ -1,0 +1,24 @@
+/* Enter your custom styles here */
+
+/* Remove IconTabBar content padding for the Active Freight Orders tab only */
+.lhFullWidthTab .sapMITBContent {
+    padding: 0;
+}
+
+/* Lane Document Upload — fixed 33/67 split */
+.lhSplitContainer {
+    height: 100%;
+    align-items: stretch;
+}
+
+.lhMasterColumn {
+    width: 25%;
+    border-right: 1px solid var(--sapList_BorderColor, #e5e5e5);
+    overflow-y: auto;
+    flex-shrink: 0;
+}
+
+.lhDetailColumn {
+    width: 75%;
+    height: 100%;
+}

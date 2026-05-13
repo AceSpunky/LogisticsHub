@@ -1,0 +1,180 @@
+{
+  "_version": "1.84.0",
+  "sap.app": {
+    "id": "com.lipton.logisticshub",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:basic",
+      "version": "1.23.0",
+      "toolsId": "d3cb084b-8a5a-4d2b-ba5f-4826f4a2e7c5"
+    },
+    "crossNavigation": {
+      "inbounds": {
+        "logisticshub-create": {
+          "semanticObject": "logisticshub",
+          "action": "create",
+          "title": "{{logisticshub-create.flpTitle}}",
+          "signature": {
+            "parameters": {},
+            "additionalParameters": "allowed"
+          }
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": false,
+    "dependencies": {
+      "minUI5Version": "1.147.2",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {},
+        "sap.tnt": {},
+        "sap.f": {},
+        "sap.ui.layout": {},
+        "sap.ui.unified": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "com.lipton.logisticshub.i18n.i18n"
+        }
+      }
+    },
+    "resources": {
+      "css": [
+        {
+          "uri": "css/style.css"
+        }
+      ]
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "controlAggregation": "pages",
+        "controlId": "navContainer",
+        "transition": "slide",
+        "type": "View",
+        "viewType": "XML",
+        "path": "com.lipton.logisticshub.view",
+        "async": true,
+        "viewPath": "com.lipton.logisticshub.view"
+      },
+      "routes": [
+        {
+          "name": "FUFOOptimizer",
+          "pattern": "",
+          "target": ["TargetFUFOOptimizer"]
+        },
+        {
+          "name": "Dashboard",
+          "pattern": "dashboard",
+          "target": ["TargetDashboard"]
+        },
+        {
+          "name": "SOSTOTracker",
+          "pattern": "so-sto-tracker",
+          "target": ["TargetSOSTOTracker"]
+        },
+        {
+          "name": "DocumentHub",
+          "pattern": "document-hub",
+          "target": ["TargetDocumentHub"]
+        },
+        {
+          "name": "Integrations",
+          "pattern": "integrations",
+          "target": ["TargetIntegrations"]
+        },
+        {
+          "name": "OceanBooking",
+          "pattern": "ocean-booking",
+          "target": ["TargetOceanBookingList"]
+        },
+        {
+          "name": "OceanBookingCreate",
+          "pattern": "ocean-booking/create",
+          "target": ["TargetOceanBookingCreate"]
+        },
+        {
+          "name": "LaneDocumentUpload",
+          "pattern": "lane-document-upload",
+          "target": ["TargetLaneDocumentUpload"]
+        }
+      ],
+      "targets": {
+        "TargetDashboard": {
+          "id": "Dashboard",
+          "name": "Dashboard"
+        },
+        "TargetSOSTOTracker": {
+          "id": "SOSTOTracker",
+          "name": "SOSTOTracker"
+        },
+        "TargetFUFOOptimizer": {
+          "id": "FUFOOptimizer",
+          "name": "FUFOOptimizer"
+        },
+        "TargetDocumentHub": {
+          "id": "DocumentHub",
+          "name": "DocumentHub"
+        },
+        "TargetIntegrations": {
+          "id": "Integrations",
+          "name": "Integrations"
+        },
+        "TargetOceanBookingList": {
+          "id": "OceanBookingList",
+          "name": "OceanBookingList"
+        },
+        "TargetOceanBookingCreate": {
+          "id": "OceanBookingCreate",
+          "name": "OceanBookingCreate"
+        },
+        "TargetLaneDocumentUpload": {
+          "id": "LaneDocumentUpload",
+          "name": "LaneDocumentUpload"
+        }
+      }
+    },
+    "rootView": {
+      "viewName": "com.lipton.logisticshub.view.App",
+      "type": "XML",
+      "id": "App",
+      "async": true
+    }
+  },
+  "sap.cloud": {
+    "public": true,
+    "service": "comliptonlogisticshub"
+  }
+}

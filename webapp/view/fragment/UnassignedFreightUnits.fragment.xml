@@ -1,0 +1,74 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.f"
+    xmlns:grid="sap.ui.layout.cssgrid">
+    <VBox id="unassignedRoot" class="sapUiSmallMarginTop">
+        <VBox id="unassignedGroupList" items="{fufo>/unassignedGroups}">
+            <f:GridList id="unassignedGroupPanelGrid" showSeparators="None" class="sapUiSmallMarginBeginEnd sapUiSmallMarginBottom" width="98%">
+                <f:GridListItem id="unassignedGroupPanelItem" type="Inactive">
+                    <f:layoutData>
+                        <grid:ResponsiveColumnItemLayoutData id="unassignedGroupPanelLayoutData" columns="auto" />
+                    </f:layoutData>
+                    <Panel id="unassignedGroupPanel" expanded="true">
+                        <headerToolbar>
+                            <OverflowToolbar id="unassignedGroupToolbar" height="4rem">
+                                <Title id="unassignedGroupTitle" text="{fufo>groupKey}" titleStyle="H4" />
+                                <ToolbarSpacer id="unassignedGroupSpacer" />
+                                <GenericTag id="unassignedGroupCount" text="Can be consolidated :" status="Information" class="sapUiSmallMarginEnd">
+                                    <ObjectNumber id="unassignedGroupCountNum" number="{fufo>count}" unit="FU(s)" />
+                                </GenericTag>
+                            </OverflowToolbar>
+                        </headerToolbar>
+                        <content>
+                            <f:GridList id="unassignedFUGrid" showSeparators="None" items="{fufo>freightUnits}" class="sapUiSmallMargin" mode="MultiSelect" selectionChange=".onFUSelect">
+                                <f:customLayout>
+                                    <grid:GridBoxLayout id="unassignedFULayout" boxWidth="300px" />
+                                </f:customLayout>
+                                <f:GridListItem id="fuCard" type="Inactive" highlight="Indication09">
+                                    <VBox id="fuCardContent" class="sapUiSmallMargin sapUiMediumMarginBegin">
+                                        <HBox id="fuCardHeader" alignItems="Center" class="sapUiTinyMarginBottom">
+                                            <HBox id="fuCardTitleBox">
+                                                <Title id="fuCardTitle" class="sapUiTinyMarginEnd" text="{fufo>id}" level="H6" />
+                                                <Text id="fuCardCustomer" text="{fufo>customer}" />
+                                            </HBox>
+                                        </HBox>
+                                        <HBox id="fuCardBadges" class="sapUiTinyMarginBottom">
+                                            <ObjectStatus id="fuCardSvcLvl" text="{fufo>serviceLevel}" state="{fufo>serviceLevelState}" class="sapUiTinyMarginEnd" inverted="true"/>
+                                            <ObjectStatus id="fuCardHaz" text="HAZ" state="Warning" visible="{fufo>hazmat}" inverted="true"/>
+                                        </HBox>
+                                        <VBox id="fuCardFields" class="sapUiTinyMarginTop">
+                                            <HBox id="fuCardRouteRow" class="sapUiTinyMarginBottom">
+                                                <Label id="fuCardRouteLbl" text="Route:" textAlign="End" class="sapUiTinyMarginEnd" />
+                                                <Text id="fuCardRoute" text="{fufo>origin} → {fufo>destination}" />
+                                            </HBox>
+                                            <HBox id="fuCardLaneRow" class="sapUiTinyMarginBottom">
+                                                <Label id="fuCardLaneLbl" text="Lane:" textAlign="End" class="sapUiTinyMarginEnd" />
+                                                <Text id="fuCardLane" text="{fufo>lane}" />
+                                            </HBox>
+                                            <HBox id="fuCardProfileRow" class="sapUiTinyMarginBottom">
+                                                <Label id="fuCardProfileLbl" text="Selection Profile:" textAlign="End" class="sapUiTinyMarginEnd" />
+                                                <Text id="fuCardProfile" text="{fufo>selectionProfile}" />
+                                            </HBox>
+                                            <HBox id="fuCardMeasuresRow" class="sapUiTinyMarginBottom">
+                                                <Label id="fuCardMeasuresLbl" text="Weight / Vol / Pal:" textAlign="End" class="sapUiTinyMarginEnd" />
+                                                <HBox id="fuCardMeasures">
+                                                    <Text id="fuCardWeight" text="{fufo>weightT}t" class="sapUiTinyMarginEnd" />
+                                                    <Text id="fuCardVolume" text="{fufo>volumeM3}m³" class="sapUiTinyMarginEnd" />
+                                                    <Text id="fuCardPallets" text="{fufo>pallets} pal" />
+                                                </HBox>
+                                            </HBox>
+                                            <HBox id="fuCardPickupRow">
+                                                <Label id="fuCardPickupLbl" text="Planned Pickup:" textAlign="End" class="sapUiTinyMarginEnd" />
+                                                <Text id="fuCardPickup" text="{fufo>plannedPickup}" />
+                                            </HBox>
+                                        </VBox>
+                                    </VBox>
+                                </f:GridListItem>
+                            </f:GridList>
+                        </content>
+                    </Panel>
+                </f:GridListItem>
+            </f:GridList>
+        </VBox>
+    </VBox>
+</core:FragmentDefinition>

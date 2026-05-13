@@ -1,0 +1,55 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+
+  
+        <Table id="activeFreightOrdersTable" class="sapUiSmallMarginBottom" items="{fufo>/activeFreightOrders}" fixedLayout="false" showSeparators="All" growing="true" growingThreshold="20" growingScrollToLoad="true">
+            <headerToolbar>
+                <OverflowToolbar id="foTableToolbar" design="Transparent">
+                    <Title id="foTableTitle" text="Active Freight Orders" titleStyle="H4" />
+                    <ToolbarSpacer id="foTableSpacer" />
+                    <SearchField id="foSearchField" class="sapUiTinyMarginEnd" placeholder="Search orders..." width="15rem" liveChange=".onFOSearch" />
+                </OverflowToolbar>
+            </headerToolbar>
+            <columns>
+                <Column id="colFoId">
+                    <Text id="colFoIdLbl" text="FO #" />
+                </Column>
+                <Column id="colFoCarrier">
+                    <Text id="colFoCarrierLbl" text="Carrier" />
+                </Column>
+                <Column id="colFoFus">
+                    <Text id="colFoFusLbl" text="FU(s)" />
+                </Column>
+                <Column id="colFoRoute">
+                    <Text id="colFoRouteLbl" text="Route" />
+                </Column>
+                <Column id="colFoVehicle">
+                    <Text id="colFoVehicleLbl" text="Vehicle Type" />
+                </Column>
+                <Column id="colFoWeight">
+                    <Text id="colFoWeightLbl" text="Weight / Vol" />
+                </Column>
+                <Column id="colFoStatus">
+                    <Text id="colFoStatusLbl" text="Status" />
+                </Column>
+                <Column id="colFoShippeo">
+                    <Text id="colFoShippeoLbl" text="Shippeo ID" />
+                </Column>
+            </columns>
+            <items>
+                <ColumnListItem id="foRow">
+                    <cells>
+                        <ObjectIdentifier id="cellFoId" title="{fufo>id}" />
+                        <Text id="cellFoCarrier" text="{fufo>carrier}" />
+                        <Text id="cellFoFus" text="{fufo>fuIds}" />
+                        <Text id="cellFoRoute" text="{fufo>route}" />
+                        <Text id="cellFoVehicle" text="{fufo>vehicleType}" />
+                        <Text id="cellFoWeight" text="{fufo>weightVol}" />
+                        <ObjectStatus id="cellFoStatus" text="{fufo>status}" state="{fufo>statusState}" inverted="true" />
+                        <Text id="cellFoShippeo" text="{fufo>shippeoId}" />
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+
+</core:FragmentDefinition>

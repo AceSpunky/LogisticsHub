@@ -1,0 +1,155 @@
+<mvc:View controllerName="com.lipton.logisticshub.controller.LaneDocumentUpload"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:grid="sap.ui.layout.cssgrid"
+    xmlns:core="sap.ui.core">
+
+    <Page id="laneDocumentUploadPage" title="Lane Document Upload" showNavButton="false">
+        <content>
+            <HBox width="100%" renderType="Bare" class="lhSplitContainer">
+
+                <!-- ═══════════════════════════════════════════════════ -->
+                <!-- MASTER — Lane list (25%)                            -->
+                <!-- ═══════════════════════════════════════════════════ -->
+                <VBox class="lhMasterColumn">
+                    <List
+                        id="lanesList"
+                        mode="SingleSelectMaster"
+                        selectionChange=".onLaneSelect"
+                        items="{laneDocuments>/gsis}"
+                        noDataText="No lanes found">
+                        <items>
+                            <CustomListItem type="Inactive">
+                                <VBox class="sapUiSmallMarginBeginEnd sapUiSmallMarginTopBottom">
+                                    <Text text="GSI {laneDocuments>gsiId}" class="sapUiTinyMarginBottom" />
+                                    <Title text="{laneDocuments>gsiName}" titleStyle="H6" wrapping="true" class="sapUiTinyMarginBottom" />
+                                    <ObjectStatus
+                                        text="{laneDocuments>revisionStatus}"
+                                        state="{laneDocuments>revisionStatusState}" />
+                                </VBox>
+                            </CustomListItem>
+                        </items>
+                    </List>
+                </VBox>
+
+                <!-- ═══════════════════════════════════════════════════ -->
+                <!-- DETAIL — Lane info + documents (75%)               -->
+                <!-- ═══════════════════════════════════════════════════ -->
+                <ScrollContainer class="lhDetailColumn" vertical="true" horizontal="false">
+                    <VBox class="sapUiSmallMarginBottom">
+
+                        <!-- ─────────────────────────────────── -->
+                        <!-- Lane Object Header                  -->
+                        <!-- ─────────────────────────────────── -->
+                        <ObjectHeader
+                            intro="GSI {laneDocuments>/selectedLane/gsiId}"
+                            title="{laneDocuments>/selectedLane/gsiName}"
+                            number="{laneDocuments>/selectedLane/version}"
+                            numberUnit="Version"
+                            responsive="true"
+                            class="sapUiResponsivePadding--header">
+                            <attributes>
+                                <ObjectAttribute title="GSI Owner" text="{laneDocuments>/selectedLane/gsiOwner}" />
+                                <ObjectAttribute title="Description" text="{laneDocuments>/selectedLane/description}" />
+                            </attributes>
+                            <statuses>
+                                <ObjectStatus title="Revision" text="{laneDocuments>/selectedLane/revisionStatus}" state="{laneDocuments>/selectedLane/revisionStatusState}" />
+                                <ObjectStatus title="Status" text="{laneDocuments>/selectedLane/status}" state="{laneDocuments>/selectedLane/statusState}" />
+                                <ObjectStatus title="Pending" text="{laneDocuments>/selectedLane/pendingStatus}" state="Warning" visible="{= !!${laneDocuments>/selectedLane/pendingStatus} }" />
+                            </statuses>
+                        </ObjectHeader>
+
+                        <!-- ─────────────────────────────────── -->
+                        <!-- Documents card                      -->
+                        <!-- ─────────────────────────────────── -->
+                        <VBox class="sapUiSmallMarginBeginEnd">
+                        <f:GridList mode="None" showSeparators="None" class="sapUiSmallMarginTop">
+                            <f:customLayout>
+                                <grid:GridBasicLayout gridTemplateColumns="repeat(1, 1fr)" />
+                            </f:customLayout>
+
+                            <f:GridListItem type="Inactive">
+                                <VBox width="98%">
+                                    <OverflowToolbar design="Transparent" height="4rem">
+                                        <Title text="Documents ({laneDocuments>/selectedLaneDocumentsCount})" class="sapUiTinyMarginBegin" titleStyle="H4" />
+                                        <ToolbarSpacer />
+                                        <Button
+                                            text="Upload Document"
+                                            type="Emphasized"
+                                            icon="sap-icon://upload"
+                                            press=".onUploadDocument" />
+                                    </OverflowToolbar>
+
+                                    <Table
+                                        id="laneDocumentsTable"
+                                        class="sapUiSmallMarginBeginEnd sapUiSmallMarginBottom"
+                                        items="{laneDocuments>/selectedLaneDocuments}"
+                                        noDataText="No documents uploaded for this lane."
+                                        alternateRowColors="true">
+                                        <columns>
+                                            <Column width="2.5rem" />
+                                            <Column hAlign="Begin">
+                                                <Text text="Document Name" />
+                                            </Column>
+                                            <Column hAlign="Begin" width="12rem">
+                                                <Text text="Document Type" />
+                                            </Column>
+                                            <Column hAlign="Begin" width="10rem">
+                                                <Text text="Uploaded By" />
+                                            </Column>
+                                            <Column hAlign="Begin" width="9rem">
+                                                <Text text="Uploaded On" />
+                                            </Column>
+                                            <Column hAlign="Begin" width="7rem">
+                                                <Text text="File Size" />
+                                            </Column>
+                                            <Column hAlign="Begin" width="9rem">
+                                                <Text text="Status" />
+                                            </Column>
+                                            <Column hAlign="Center" width="7rem">
+                                                <Text text="Actions" />
+                                            </Column>
+                                        </columns>
+                                        <items>
+                                            <ColumnListItem type="Inactive">
+                                                <cells>
+                                                    <core:Icon src="{laneDocuments>icon}" size="1.2rem" color="#1473E6" />
+                                                    <ObjectIdentifier
+                                                        title="{laneDocuments>docName}"
+                                                        text="{laneDocuments>docDescription}" />
+                                                    <Text text="{laneDocuments>docType}" />
+                                                    <Text text="{laneDocuments>uploadedBy}" />
+                                                    <Text text="{laneDocuments>uploadedOn}" />
+                                                    <Text text="{laneDocuments>fileSize}" />
+                                                    <ObjectStatus
+                                                        text="{laneDocuments>status}"
+                                                        state="{laneDocuments>statusState}" />
+                                                    <HBox justifyContent="Center">
+                                                        <Button
+                                                            icon="sap-icon://download"
+                                                            type="Transparent"
+                                                            tooltip="Download"
+                                                            press=".onDownloadDocument" />
+                                                        <Button
+                                                            icon="sap-icon://delete"
+                                                            type="Transparent"
+                                                            tooltip="Delete"
+                                                            press=".onDeleteDocument" />
+                                                    </HBox>
+                                                </cells>
+                                            </ColumnListItem>
+                                        </items>
+                                    </Table>
+                                </VBox>
+                            </f:GridListItem>
+                        </f:GridList>
+
+                        </VBox>
+                    </VBox>
+                </ScrollContainer>
+
+            </HBox>
+        </content>
+    </Page>
+</mvc:View>

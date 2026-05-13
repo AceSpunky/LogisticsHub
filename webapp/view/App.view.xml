@@ -1,0 +1,32 @@
+<mvc:View controllerName="com.lipton.logisticshub.controller.App" displayBlock="true"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:tnt="sap.tnt">
+    <tnt:ToolPage id="toolPage">
+        <tnt:header>
+            <tnt:ToolHeader id="toolHeader">
+                <Button id="menuButton" icon="sap-icon://menu2" press=".onMenuButtonPress" type="Transparent" />
+                <Title id="appTitle" text="Logistics Hub" />
+            </tnt:ToolHeader>
+        </tnt:header>
+        <tnt:sideContent>
+            <tnt:SideNavigation id="sideNavigation" itemSelect=".onNavigationItemSelect" selectedItem="fuFoOptimizerItem" expanded="false">
+                <tnt:item>
+                    <tnt:NavigationList id="mainNavList">
+                        <tnt:NavigationListItem id="dashboardItem" text="Dashboard" icon="sap-icon://home" key="Dashboard" enabled="false" />
+                        <tnt:NavigationListItem id="soStoTrackerItem" text="SO/STO Tracker" icon="sap-icon://journey-arrive" key="SOSTOTracker" enabled="false" />
+                        <tnt:NavigationListItem id="fuFoOptimizerItem" text="FU/FO Optimizer" icon="sap-icon://cargo-train" key="FUFOOptimizer" />
+                        <tnt:NavigationListItem id="documentHubItem" text="Document Hub" icon="sap-icon://documents" key="DocumentHub" />
+                        <!-- <tnt:NavigationListItem id="integrationsItem" text="Integrations" icon="sap-icon://connected" key="Integrations" /> Keep this hidden for now --> 
+                        <tnt:NavigationListItem id="laneDocUploadItem" text="Lane Document Upload" icon="sap-icon://upload-to-cloud" key="LaneDocumentUpload" />
+                        <tnt:NavigationListItem id="oceanBookingItem" text="Ocean Booking" icon="sap-icon://course-book" key="OceanBooking" />
+                        <tnt:NavigationListItem id="masterDataUploadItem" text="Master Data Upload" icon="sap-icon://upload" key="MasterDataUpload" />
+                    </tnt:NavigationList>
+                </tnt:item>
+            </tnt:SideNavigation>
+        </tnt:sideContent>
+        <tnt:mainContents>
+            <NavContainer id="navContainer" />
+        </tnt:mainContents>
+    </tnt:ToolPage>
+</mvc:View>

@@ -1,0 +1,6 @@
+<mvc:View controllerName="com.lipton.logisticshub.controller.Dashboard"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+    <Page id="dashboardPage" title="Dashboard" showNavButton="false">
+    </Page>
+</mvc:View>

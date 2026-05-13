@@ -1,0 +1,55 @@
+<mvc:View controllerName="com.lipton.logisticshub.controller.FUFOOptimizer"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns="sap.m">
+    <Page id="fuFoOptimizerPage" title="FU/FO Optimizer" showNavButton="false">
+        <content>
+            <VBox id="fuFoLayout" class="sapUiSmallMarginTop">
+                <MessageStrip
+                    id="fuFoInfoStrip"
+                    text="FU-FO Optimization Logic: SAP TM base configuration determines lanes, selection profiles, and service levels. FUs sharing the same lane + selection profile can be consolidated into one FO (1 FU→1 FO or N FU→1 FO). For ocean legs, no FO is created — Cargoo booking references are used directly. Road pre-carriage and post-carriage FOs are tracked via Shippeo."
+                    type="Information"
+                    showIcon="true"
+                    showCloseButton="true"
+                    class="sapUiSmallMarginBeginEnd sapUiSmallMarginBottom" />
+                <IconTabBar
+                    id="fuFoTabBar"
+                    select=".onTabSelect"
+                    expandable="false"
+                    headerMode="Inline"
+                    headerBackgroundDesign="Transparent">
+                    <items>
+                        <IconTabFilter
+                            id="tabSuggestions"
+                            key="suggestions"
+                            text="Consolidation Suggestions"
+                            count="2">
+                            <core:Fragment
+                                fragmentName="com.lipton.logisticshub.view.fragment.ConsolidationSuggestions"
+                                type="XML" />
+                        </IconTabFilter>
+                        <IconTabFilter
+                            id="tabUnassigned"
+                            key="unassigned"
+                            text="Unassigned Freight Units"
+                            count="9">
+                            <core:Fragment
+                                fragmentName="com.lipton.logisticshub.view.fragment.UnassignedFreightUnits"
+                                type="XML" />
+                        </IconTabFilter>
+                        <IconTabFilter
+                            id="tabActive"
+                            key="existing"
+                            icon="sap-icon://shipping-status"
+                            text="Active Freight Orders"
+                            count="6">
+                            <core:Fragment
+                                fragmentName="com.lipton.logisticshub.view.fragment.ActiveFreightOrders"
+                                type="XML" />
+                        </IconTabFilter>
+                    </items>
+                </IconTabBar>
+            </VBox>
+        </content>
+    </Page>
+</mvc:View>

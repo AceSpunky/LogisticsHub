@@ -1,0 +1,238 @@
+<mvc:View controllerName="com.lipton.logisticshub.controller.DocumentHub"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:grid="sap.ui.layout.cssgrid">
+    <Page id="documentHubPage" title="Document Hub" showNavButton="false">
+        <content>
+            <VBox id="docHubLayout" class="sapUiSmallMarginTop">
+
+                <!-- ① Message Strip -->
+                <MessageStrip
+                    id="docMissingStrip"
+                    text="1 missing document detected — Shipment may be held at customs. Please upload the Bill of Lading for OCN-004 immediately."
+                    type="Error"
+                    showIcon="true"
+                    showCloseButton="true"
+                    class="sapUiSmallMarginBeginEnd" />
+
+                <!-- ② Status Summary – GridList tiles (click to filter table) -->
+                <f:GridList
+                    id="statusSummaryGrid"
+                    showSeparators="None"
+                    class="sapUiSmallMarginBeginEnd sapUiSmallMarginTop">
+                    <f:customLayout>
+                        <grid:GridBoxLayout id="statusGridLayout" boxWidth="24.2%" />
+                    </f:customLayout>
+
+                    <!-- All Documents -->
+                    <f:GridListItem id="tileAll" type="Active" press=".onStatusCardPress">
+                        <f:customData>
+                            <core:CustomData key="statusFilter" value="all" />
+                        </f:customData>
+                        <VBox id="tileAllContent" alignItems="Center" justifyContent="Center" class="sapUiSmallMargin">
+                            <ObjectStatus id="statusAll" text="All Documents" state="None" class="sapMObjectStatusLarge sapUiTinyMarginBottom" />
+                            <ObjectNumber id="numAll" number="15" state="None" emphasized="true" unit="" class="sapMObjectNumberLarge" />
+                        </VBox>
+                    </f:GridListItem>
+
+                    <!-- Confirmed -->
+                    <f:GridListItem id="tileConfirmed" type="Active" press=".onStatusCardPress">
+                        <f:customData>
+                            <core:CustomData key="statusFilter" value="confirmed" />
+                        </f:customData>
+                        <VBox id="tileConfirmedContent" alignItems="Center" justifyContent="Center" class="sapUiSmallMargin">
+                            <ObjectStatus id="statusConfirmed" text="Confirmed" state="Success" class="sapMObjectStatusLarge sapUiTinyMarginBottom" />
+                            <ObjectNumber id="numConfirmed" number="12" state="Success" emphasized="true" unit="" class="sapMObjectNumberLarge" />
+                        </VBox>
+                    </f:GridListItem>
+
+                    <!-- Pending Review -->
+                    <f:GridListItem id="tilePending" type="Active" press=".onStatusCardPress">
+                        <f:customData>
+                            <core:CustomData key="statusFilter" value="pending" />
+                        </f:customData>
+                        <VBox id="tilePendingContent" alignItems="Center" justifyContent="Center" class="sapUiSmallMargin">
+                            <ObjectStatus id="statusPending" text="Pending Review" state="Warning" class="sapMObjectStatusLarge sapUiTinyMarginBottom" />
+                            <ObjectNumber id="numPending" number="2" state="Warning" emphasized="true" unit="" class="sapMObjectNumberLarge" />
+                        </VBox>
+                    </f:GridListItem>
+
+                    <!-- Missing -->
+                    <f:GridListItem id="tileMissing" type="Active" press=".onStatusCardPress">
+                        <f:customData>
+                            <core:CustomData key="statusFilter" value="missing" />
+                        </f:customData>
+                        <VBox id="tileMissingContent" alignItems="Center" justifyContent="Center" class="sapUiSmallMargin">
+                            <ObjectStatus id="statusMissing" text="Missing" state="Error" class="sapMObjectStatusLarge sapUiTinyMarginBottom" />
+                            <ObjectNumber id="numMissing" number="1" state="Error" emphasized="true" unit="" class="sapMObjectNumberLarge" />
+                        </VBox>
+                    </f:GridListItem>
+
+                </f:GridList>
+
+                <!-- ③ Filter Toolbar: inverted ObjectStatus per source + search -->
+                <OverflowToolbar id="docFilterBar" class="sapUiMediumMarginTop" height="3rem">
+                    <Label id="sourceFilterLabel" class="sapUiTinyMarginBegin" text="Source:" design="Bold"/>
+                    <ObjectStatus
+                        id="filterSap"
+                        text="SAP (9)"
+                        state="Information"
+                        inverted="{docHub>/sourceFilterActive/sap}"
+                        active="true"
+                        press=".onSourceFilterPress">
+                        <customData>
+                            <core:CustomData key="source" value="sap" />
+                        </customData>
+                    </ObjectStatus>
+                    <ObjectStatus
+                        id="filterCargoo"
+                        text="Cargoo (4)"
+                        state="Success"
+                        inverted="{docHub>/sourceFilterActive/cargoo}"
+                        active="true"
+                        press=".onSourceFilterPress">
+                        <customData>
+                            <core:CustomData key="source" value="cargoo" />
+                        </customData>
+                    </ObjectStatus>
+                    <ObjectStatus
+                        id="filterCarrier"
+                        text="Carrier (1)"
+                        state="Warning"
+                        inverted="{docHub>/sourceFilterActive/carrier}"
+                        active="true"
+                        press=".onSourceFilterPress">
+                        <customData>
+                            <core:CustomData key="source" value="carrier" />
+                        </customData>
+                    </ObjectStatus>
+                    <ObjectStatus
+                        id="filterManual"
+                        text="Manual (1)"
+                        state="None"
+                        inverted="{docHub>/sourceFilterActive/manual}"
+                        active="true"
+                        press=".onSourceFilterPress">
+                        <customData>
+                            <core:CustomData key="source" value="manual" />
+                        </customData>
+                    </ObjectStatus>
+                    <ToolbarSpacer id="docFilterSpacer" />
+                    <SearchField
+                        id="docSearchField"
+                        class="sapUiSmallMarginEnd"
+                        placeholder="Search by document, reference…"
+                        width="18rem"
+                        liveChange=".onDocSearch" />
+                    <Button
+                        id="btnUploadDoc"
+                        class="sapUiTinyMarginEnd"
+                        icon="sap-icon://upload"
+                        text="Upload Document"
+                        type="Emphasized"
+                        press=".onDocUpload" />
+                </OverflowToolbar>
+
+                <!-- ④ Responsive Table -->
+                <Table
+                    id="documentsTable"
+                    items="{docHub>/filteredDocuments}"
+                    fixedLayout="false"
+                    showSeparators="Inner"
+                    noDataText="No documents match your current filters.">
+                    <columns>
+                        <Column id="colDocument" >
+                            <Text id="colDocumentLabel" text="Document" />
+                        </Column>
+                        <Column id="colSource"  minScreenWidth="Tablet" demandPopin="true">
+                            <Text id="colSourceLabel" text="Source" />
+                        </Column>
+                        <Column id="colReference" minScreenWidth="Small">
+                            <Text id="colReferenceLabel" text="Reference" />
+                        </Column>
+                        <Column id="colLanes"  minScreenWidth="Tablet" demandPopin="true">
+                            <Text id="colLanesLabel" text="Lanes" />
+                        </Column>
+                        <Column id="colUploaded" minScreenWidth="Desktop" demandPopin="true">
+                            <Text id="colUploadedLabel" text="Uploaded" />
+                        </Column>
+                        <Column id="colStatus" minScreenWidth="Tablet" demandPopin="true">
+                            <Text id="colStatusLabel" text="Status" />
+                        </Column>
+                        <Column id="colActions">
+                            <Text id="colActionsLabel" text="Actions" />
+                        </Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem id="docRow">
+                            <cells>
+                                <ObjectIdentifier
+                                    id="cellDocName"
+                                    title="{docHub>name}"
+                                    text="{docHub>typeLabel}" />
+                                <ObjectStatus
+                                    id="cellSource"
+                                    text="{docHub>sourceLabel}"
+                                    state="{docHub>sourceState}"
+                                    inverted="true" />
+                                <ObjectIdentifier
+                                    id="cellRef"
+                                    title="{docHub>referenceId}"
+                                    text="{docHub>refSub}" />
+                                <RadioButtonGroup id="cellSelection" columns="1">
+                                    <buttons>
+                                        <RadioButton id="rbAllLanes" text="All Lanes" />
+                                        <RadioButton id="rbSelective" text="Selective" />
+                                    </buttons>
+                                </RadioButtonGroup>
+                                <Text id="cellUploaded" text="{docHub>uploadedAt}" />
+                                <ObjectStatus
+                                    id="cellStatus"
+                                    text="{docHub>statusLabel}"
+                                    state="{docHub>statusState}"
+                                    icon="{docHub>statusIcon}" />
+                                <HBox id="cellActionsBox">
+                                    <Button
+                                        id="btnDownload"
+                                        icon="sap-icon://download"
+                                        type="Transparent"
+                                        tooltip="Download"
+                                        visible="{docHub>canDownload}"
+                                        press=".onDocDownload">
+                                        <customData>
+                                            <core:CustomData key="docId" value="{docHub>id}" />
+                                        </customData>
+                                    </Button>
+                                    <Button
+                                        id="btnUpload"
+                                        icon="sap-icon://upload"
+                                        type="Transparent"
+                                        tooltip="Upload"
+                                        visible="{docHub>canUpload}"
+                                        press=".onDocUpload">
+                                        <customData>
+                                            <core:CustomData key="docId" value="{docHub>id}" />
+                                        </customData>
+                                    </Button>
+                                    <Button
+                                        id="btnOpenSource"
+                                        icon="sap-icon://action"
+                                        type="Transparent"
+                                        tooltip="Open in source system"
+                                        press=".onDocOpenSource">
+                                        <customData>
+                                            <core:CustomData key="docId" value="{docHub>id}" />
+                                        </customData>
+                                    </Button>
+                                </HBox>
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+
+            </VBox>
+        </content>
+    </Page>
+</mvc:View>
